@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recipient Dashboard - FoodConnect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --pistachio: rgba(147, 197, 114, 0.95);
+      --dark-green: #002800;
+      --light-yellow-green: rgba(197, 227, 132, 0.95);
+      --dark-yellow: #BA8E23;
+    }
+
+    body {
+      background-image: url('images/background.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      color: var(--dark-green);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: var(--pistachio);
+      color: var(--dark-green);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .about-link {
+      color: var(--dark-green);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .about-link:hover {
+      text-decoration: underline;
+      color: #001a00;
+    }
+
+    .dashboard-card {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: var(--dark-green);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .stat-box {
+      background-color: var(--light-yellow-green);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .stat-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--dark-green);
+    }
+
+    .progress-bar-custom {
+      background-color: var(--dark-yellow);
+      height: 20px;
+      border-radius: 50px;
+    }
+
+    .action-card {
+      background-color: rgba(255,255,255,0.85);
+      color: var(--dark-green);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .action-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    .action-card i {
+      font-size: 2.5rem;
+      color: var(--dark-yellow);
+      margin-bottom: 1rem;
+    }
+
+    .action-card a.btn {
+      background-color: var(--dark-green);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 10px 25px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .action-card a.btn:hover {
+      background-color: #001a00;
+      transform: scale(1.05);
+      color: white;
+    }
+
+    footer {
+      background-color: var(--pistachio);
+      color: var(--dark-green);
+      margin-top: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="mb-0 header-title">
+        <i class="fas fa-seedling me-2"></i>FoodConnect
+      </h1>
+      <div>
+        <a href="index.html" class="about-link me-4">Home</a>
+        <a href="contact.html" class="about-link">Contact</a>
+        <a href="#" class="about-link">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Dashboard -->
+  <main class="container my-5">
+    <div class="text-center mb-4">
+      <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.85); padding: 12px 40px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h2 class="fw-bold mb-0" style="color: #2f6b2f;">
+          <i class="fas fa-user-friends me-2 text-success"></i>Recipient Dashboard
+        </h2>
+      </div>
+    </div>
+
+    <!-- Impact Overview -->
+    <section class="dashboard-card mb-5">
+      <h4 class="text-center mb-4">
+        <i class="fas fa-chart-bar me-2 text-success"></i>Food Impact Overview
+      </h4>
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="stat-box">
+            <div class="stat-number" id="requestsUploaded">45</div>
+            <p class="fw-semibold">Requests Uploaded</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-box">
+            <div class="stat-number" id="recipientsSupported">32</div>
+            <p class="fw-semibold">Recipients Supported</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-box">
+            <div class="stat-number" id="foodReceived">285</div>
+            <p class="fw-semibold">Kg of Food Received</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <p class="fw-semibold mb-1">Community Progress</p>
+        <div class="progress">
+          <div class="progress-bar progress-bar-custom" style="width: 80%;"></div>
+        </div>
+        <small class="text-muted">You've reached 80% of your monthly community goal</small>
+      </div>
+    </section>
+
+    <!-- Actions Section -->
+    <div class="row justify-content-center g-4">
+      <div class="col-md-4">
+        <div class="action-card">
+          <i class="fas fa-upload"></i>
+          <h4>Upload Requests</h4>
+          <p>Submit your food needs or donation requests to suppliers.</p>
+          <a href="uploadrequest.html" class="btn">Upload Request</a>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="action-card">
+          <i class="fas fa-box-open"></i>
+          <h4>View Available Food Surplus</h4>
+          <p>Browse food surplus listed by suppliers and request what you need.</p>
+          <a href="view-available-surplus.html" class="btn">View Surplus</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+ <footer class="text-center py-4 mt-4">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-md-start">
+        <p class="mb-0 fw-semibold">&copy; 2025 FoodConnect</p>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-2">
+          <a href="#" class="about-link me-3">Privacy Policy</a>
+          <a href="#" class="about-link">Terms of Service</a>
+        </div>
+      </div>
+      <div class="col-md-4 text-md-end">
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

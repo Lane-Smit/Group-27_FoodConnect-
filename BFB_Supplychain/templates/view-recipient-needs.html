@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Recipient Needs - FoodConnect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --pistachio: rgba(147, 197, 114, 0.95);
+      --dark-green: #002800;
+      --light-yellow-green: rgba(197, 227, 132, 0.95);
+      --dark-yellow: #BA8E23;
+    }
+
+    body {
+      background-image: url('images/background.png');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      color: var(--dark-green);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: var(--pistachio);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-title { font-size: 2.5rem; font-weight: bold; }
+
+    .about-link {
+      color: var(--dark-green);
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .about-link:hover { text-decoration: underline; }
+
+    .title-section {
+      background-color: rgba(255,255,255,0.9);
+      border-radius: 12px;
+      padding: 20px 40px;
+      text-align: center;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      vertical-align: middle !important;
+      padding: 10px 16px !important;
+      white-space: nowrap;
+    }
+
+    table {
+      background-color: rgba(255,255,255,0.95);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-size: 0.95rem;
+    }
+
+    thead {
+      background-color: var(--light-yellow-green);
+      color: var(--dark-green);
+    }
+
+    th:nth-child(1), td:nth-child(1) { min-width: 100px; } /* Action */
+    th:nth-child(2), td:nth-child(2) { min-width: 150px; } /* Reciepient */
+    th:nth-child(4), td:nth-child(4) { min-width: 140px; } /* Contact */
+    th:nth-child(8), td:nth-child(8) { min-width: 120px; } /* Prefered Date */
+    th:nth-child(9), td:nth-child(9) { min-width: 220px; } /* Notes */
+
+    #loadMoreBtn {
+      display: block;
+      margin: 30px auto 0;
+      background-color: var(--dark-green);
+      color: white;
+      border: none;
+      padding: 10px 30px;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      font-weight: bold;
+    }
+
+    #loadMoreBtn:hover { background-color: #001a00; transform: scale(1.05); }
+
+    .status-badge { font-size: 0.8rem; }
+    .urgency-high { background-color: #dc3545 !important; }
+    .urgency-medium { background-color: #ffc107 !important; color: #000; }
+    .urgency-low { background-color: #198754 !important; }
+
+    .donate-btn {
+      background-color: var(--dark-yellow);
+      color: black;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .donate-btn:hover {
+      background-color: #9c751c;
+      transform: scale(1.05);
+      color: black;
+    }
+
+    .donate-btn:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    footer { background-color: var(--pistachio); margin-top: auto; }
+  </style>
+</head>
+
+<body>
+  <header class="py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="mb-0 header-title">
+        <i class="fas fa-seedling me-2"></i>FoodConnect
+      </h1>
+      <div>
+        <a href="supplier-dashboard.html" class="about-link me-4">Dashboard</a>
+        <a href="index.html" class="about-link me-4">Home</a>
+        <a href="contact.html" class="about-link">Contact</a>
+        <a href="#" class="about-link">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <div class="title-section">
+      <h2 class="fw-bold">
+        <i class="fas fa-hand-holding-heart text-success me-2"></i>View Recipient Needs
+      </h2>
+      <p class="text-muted mb-0">
+        Search by <b>location</b>, <b>urgency</b>, or <b>food type</b> to find recipients you can assist.
+      </p>
+    </div>
+
+    <div class="search-box text-center mb-3">
+      <input id="searchInput" type="text" class="form-control" placeholder="Search by location, urgency, or food type...">
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle text-center" id="recipientTable">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Recipient</th>
+            <th>Location</th>
+            <th>Contact</th>
+            <th>Food Type</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Urgency</th>
+            <th>Preferred Date</th>
+            <th>Notes</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data aligned with uploadrequest.html to show how it will look more or less after Backend is added -->
+          <tr>
+            <td><button class="donate-btn" onclick="donateFood(this, 'Ubuntu Shelter', 'Vegetables')"><i class="fas fa-hand-holding-heart me-1"></i>Donate</button></td>
+            <td>Ubuntu Shelter</td>
+            <td>Pretoria</td>
+            <td>082 345 6789</td>
+            <td>Vegetables</td>
+            <td>Fresh produce for meal prep</td>
+            <td>80 kg</td>
+            <td><span class="badge urgency-high">High</span></td>
+            <td>2025-10-30</td>
+            <td>Require before 3 PM for lunch service</td>
+            <td><span class="badge bg-secondary status-badge">Pending</span></td>
+          </tr>
+          <tr>
+            <td><button class="donate-btn" onclick="donateFood(this, 'Helping Hands SA', 'Rice')"><i class="fas fa-hand-holding-heart me-1"></i>Donate</button></td>
+            <td>Helping Hands SA</td>
+            <td>Johannesburg</td>
+            <td>083 987 1122</td>
+            <td>Rice</td>
+            <td>Dry rice for soup kitchens</td>
+            <td>100 kg</td>
+            <td><span class="badge urgency-medium">Medium</span></td>
+            <td>2025-11-02</td>
+            <td>Open to deliveries over weekend</td>
+            <td><span class="badge bg-secondary status-badge">Pending</span></td>
+          </tr>
+          <tr>
+            <td><button class="donate-btn" onclick="donateFood(this, 'Grace Foundation', 'Dairy')"><i class="fas fa-hand-holding-heart me-1"></i>Donate</button></td>
+            <td>Grace Foundation</td>
+            <td>Cape Town</td>
+            <td>081 445 9987</td>
+            <td>Dairy</td>
+            <td>Milk for morning programs</td>
+            <td>50 L</td>
+            <td><span class="badge urgency-low">Low</span></td>
+            <td>2025-11-04</td>
+            <td>Prefer collection from supplier</td>
+            <td><span class="badge bg-secondary status-badge">Pending</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <button id="loadMoreBtn">Load More</button>
+  </main>
+
+ <!-- Footer -->
+ <footer class="text-center py-4 mt-4">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-md-start">
+        <p class="mb-0 fw-semibold">&copy; 2025 FoodConnect</p>
+      </div>
+      <div class="col-md-4">
+        <div class="mb-2">
+          <a href="#" class="about-link me-3">Privacy Policy</a>
+          <a href="#" class="about-link">Terms of Service</a>
+        </div>
+      </div>
+      <div class="col-md-4 text-md-end">
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <script>
+    const rows = document.querySelectorAll("#recipientTable tbody tr");
+    const loadMoreBtn = document.getElementById("loadMoreBtn");
+    let visibleRows = 10;
+
+    rows.forEach((row, index) => { if (index >= visibleRows) row.style.display = "none"; });
+
+    loadMoreBtn.addEventListener("click", () => {
+      visibleRows += 10;
+      rows.forEach((row, index) => {
+        if (index < visibleRows) row.style.display = "";
+      });
+      if (visibleRows >= rows.length) loadMoreBtn.style.display = "none";
+    });
+
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+      let filter = this.value.toLowerCase();
+      rows.forEach(row => {
+        let text = row.textContent.toLowerCase();
+        row.style.display = text.includes(filter) ? "" : "none";
+      });
+    });
+
+    function donateFood(button, recipient, foodType) {
+      // Disable the button to avoid muliple donations
+      button.disabled = true;
+      button.innerHTML = '<i class="fas fa-check me-1"></i>Donated';
+      button.classList.remove('donate-btn');
+      button.style.backgroundColor = '#6c757d';
+      button.style.color = 'white';
+      
+      // Show confirmation message
+      alert(`Donation offer sent to ${recipient} for ${foodType}! The recipient will contact you soon.`);
+      
+      // I will edit this after backend is added 
+      console.log(`Donation offer: ${foodType} to ${recipient}`);
+    }
+  </script>
+</body>
+</html>
+
