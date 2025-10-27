@@ -190,7 +190,7 @@ BFB Supply Chain/
 |   ├── view-recipient-needs.html        # View recipient food needs
 ├── foodconnect.db
 ├── foodconnect.sql
-├──readme.md                             # Explanation of project purpose, database schema and ERD.
+├── README.md                             # Explanation of project purpose, database schema and ERD.
 ```
 
 ## Usage
